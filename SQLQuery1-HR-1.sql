@@ -192,3 +192,149 @@ from  locations
     select e.first_name,d.department_name
     from employees e join departments d
     on e.department_id =d.department_id
+
+
+    select *
+from departments
+
+select *
+from employees
+
+select *
+from jobs
+
+select *
+from departments
+  
+select *
+from  locations
+
+
+select d.department_id,d.department_name ,max(salary) as max_salary ,MIN(salary) as MIN_salary,sum(salary) as sum_salary, count(salary) as count_salary,avg(salary)as avg_salary,sum(employee_id) as sum_employee_id
+    from employees e join departments d
+    on e.department_id = d.department_id
+     where  d.department_id > 30 
+    group by d.department_id,d.department_name
+    having count(salary) >= 5
+    order by d.department_id desc
+
+    -------------------------------------------------------------------------------
+
+
+    select *
+    from employees
+
+    insert into employees 
+    values(207,'Mohammed','alkubati','alkubati000',null,'1999-1-1','IT_prog',40000,null,null,60)
+
+   update employees
+   set salary = 50000
+   where employee_id =207 
+
+
+    delete employees
+   set salary = 50000
+   where employee_id =207 
+
+   ------------------------------------------------------------------------------------------------------------
+--   create courses table as follow:
+--   cours_id => pk
+--   course_title => not null
+--   price => between 800 and 3000
+--   start_date => default value the date after 7 days
+--   duration => btw 12 and 120
+
+   create database firstdb;
+
+   drop database firstdb;
+
+   create table courses (
+   cours_id int,--PK
+   course_title varchar(50) not null,
+   price DECIMAL(9,3),
+   starts_date date default getdate() + 7,
+   duration int,
+   
+   constraint firstdb_cours_id_PK primary key(cours_id),
+   constraint firstdb_price_CK check(price between 800 and 3000),
+   );
+
+   create table courses
+(
+cours_id int,
+ course_title varchar(50) not null,
+ price DECIMAL(8,2) ,
+ Start_Data  DATE default getdate()+7 ,
+ duration int ,
+
+constraint courses_cours_id_PK primary key(cours_id),
+constraint courses_price_CK check(price between   800 and  3000),
+constraint courses_duration_CK check(duration between   12 and  120)
+);
+
+   insert into courses ( cours_id,course_title,price, starts_date,duration)
+   values(1,comp,9000,2026)
+
+   select *
+   from courses
+
+
+   -- * create a projects table 
+--   project_id => pk
+--   project_name => not null
+--   client_name => 
+--   hour_rate => positive greater than 1
+
+     create table projects(
+     projects_id int,
+     project_name varchar(50) not null,
+     client_name  varchar(50),
+     hour_rate int,
+
+
+     constraint firstdb_projects_id_PK primary key(projects_id),
+
+);
+
+
+     create table projects(
+     projects_id int,
+     project_name varchar(50) not null,
+     client_name  varchar(50),
+     hour_rate decimal(10,3),
+
+
+     constraint firstdb_projects_id_PK primary key(projects_id),
+      constraint firstdb_hour_rate_CK   check(hour_rate),
+);
+
+select *
+from projects
+
+-- * create a tasks table
+--   task_id => pk
+--   description => max char 255
+--   start_date => date
+--   end_date => greater than start_date
+--   project_id => foreign key
+
+ create table tasks(
+     task_id int,
+     description_ char(255)
+     start_date_s date  default getdate(),
+     end_date date ,
+     project_id int,
+
+     constraint firstdb_task_id_PK primary key(task_id),
+     constraint  firstdb_project_FK  FOREIGN KEY(project_id) 
+);
+
+CREATE TABLE Tasks (
+    Task_ID INT PRIMARY KEY,
+    Description VARCHAR(255),
+    Start_Date DATE,
+    End_Date DATE,
+    Project_ID INT ,
+	 CONSTRAINT Tasks_Project_ID_FK  FOREIGN KEY(Project_ID) REFERENCES Projects(Project_ID),
+    CONSTRAINT CK_Tasks_EndDate CHECK (End_Date > Start_Date)
+);
