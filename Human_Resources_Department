@@ -1,1 +1,386 @@
 
+DROP TABLE   LeaveRequests;
+DROP TABLE   Employees;
+DROP TABLE   Departments;
+DROP TABLE   TrainingCourses;
+DROP TABLE   Instructors;
+
+
+---------------------------------------------------
+--[1]
+create table Departments(
+       DepartmentID int  Primary Key,
+       DepartmentName nvarchar(50) Not Null Unique,
+     --  ManagerID int  Foreign Key REFERENCES Employees       
+)
+--[2]
+create table Employees( 
+       EmployeeID int  Primary Key,
+       FirstName nvarchar(50) Not Null,
+       LastName  nvarchar(50) Not Null,
+       DepartmentID  int Foreign Key references Departments,
+       Salary decimal(10 ,2) not null Check (Salary >= 0)
+)
+
+--[3]
+create table Instructors(
+       InstructorID int primary key,
+       FirstName nvarchar(50) not null,
+       LastName nvarchar(50) not null 
+)
+--[4]
+create table TrainingCourses(
+       CourseID int  Primary Key,
+       CourseName nvarchar(100) Not Null ,
+       StartDate date Not Null,
+       EndDate date Not Null,
+       InstructorID int Foreign Key references Instructors
+       )
+--[5]
+create table LeaveRequests(
+       LeaveID int  Primary Key,
+       EmployeeID int Foreign Key REFERENCES Employees,
+       StartDate date Not null,
+       EndDate   date Not Null,
+       Reason  nvarchar(100),
+       Status  nvarchar(20) Check (Status IN ('Pending' , 'Approved', 'Rejected'))
+)
+-------------------------------------------------------------------------------------
+--test[the code is  working]
+select *
+from LeaveRequests;
+ select *
+from Employees;
+select *
+from  Departments;
+ select *
+from  TrainingCourses;
+  select *
+from Instructors;
+--test[the code is  working]
+insert into Departments
+values(1,'Dep_IT')
+
+insert into Employees
+values(10,'mohammed','nabil',1,6000)
+
+insert into Instructors
+values(3054,'mohammed','hamd')
+
+insert into TrainingCourses
+values(33,'program','1-2-2021','1-3-2021',3054)
+
+insert into LeaveRequests
+values(4,10,'1-1-2021','1-2-2021','sumry','Approved')
+-------------------------------------------------------------------------------------
+--test[the code is  working]
+alter table Departments
+add ManagerID int  Foreign Key REFERENCES Employees
+-------------------------------------------------------------------------------------
+-- here we insert the  Information  the table Employees
+-- step 1 we delet all the test code 
+DROP TABLE   LeaveRequests;
+DROP TABLE   Employees;
+DROP TABLE   Departments;
+DROP TABLE   TrainingCourses;
+DROP TABLE   Instructors;
+UPDATE Departments SET ManagerID = NULL;
+
+DELETE FROM LeaveRequests;
+DELETE FROM TrainingCourses;
+
+هنا الزين
+
+هنا قبل التجارب create database Human_Resources_Department  
+
+
+select *
+--from Employees 
+--create table in the Human_Resources_Department 
+--[1]Employees,[2] Departments,[3] TrainingCourses,[4] Instructors,[5] LeaveRequests
+
+
+--[1]Employees
+create table Employees(
+       EmployeeID int  Primary Key,
+       FirstName nvarchar(50) Not Null,
+       LastName  nvarchar(50) Not Null,
+       DepartmentID  int Foreign Key references Employees,
+       Salary decimal(10 ,2) not null Check (Salary >= 0)
+)
+--insert into Employees (EmployeeID,FirstName, LastName,DepartmentID,Salary)
+--values(1,'mohammed','nabil',20,40000)
+
+INSERT INTO Employees (EmployeeID, FirstName, LastName, DepartmentID, Salary)
+VALUES (1, 'mohammed', 'nabil', 20, 40000)
+
+select *
+--from LeaveRequests
+
+--[2] LeaveRequests
+create table LeaveRequests(
+       LeaveID int  Primary Key,
+       EmployeeID int Foreign Key REFERENCES LeaveRequests,
+       StartDate date Not null,
+       EndDate   date Not Null,
+       Reason  nvarchar(100),
+       Status  nvarchar(20) Check (Status IN ('Pending' , 'Approved', 'Rejected'))
+)
+INSERT INTO LeaveRequests (LeaveID, EmployeeID, StartDate, EndDate, Reason, Status)
+VALUES (10, 1, '2026-09-01', '2026-09-05', 'Annual Vacation', 'Pending')
+select *
+--from Departments
+--[3] Departments
+create table Departments(
+       DepartmentID int  Primary Key,
+       DepartmentName nvarchar(50) Not Null Unique,
+       ManagerID int  Foreign Key REFERENCES Departments,       
+)
+INSERT INTO Departments (DepartmentID, DepartmentName)
+VALUES (20, 'IT'), (30, 'HR')
+
+select *
+--from TrainingCourses
+--[4] TrainingCourses
+create table TrainingCourses(
+       CourseID int  Primary Key,
+       CourseName nvarchar(100) Not Null ,
+       StartDate date Not Null,
+       EndDate date Not Null,
+       InstructorID int Foreign Key references TrainingCourses,
+
+     
+)  
+INSERT INTO TrainingCourses (CourseID, CourseName, StartDate, EndDate, InstructorID)
+VALUES (500, 'SQL Server Basics', '2026-08-01', '2026-08-10', 101)
+
+select *
+--from Instructors
+--[5] Instructors
+create table Instructors(
+       InstructorID int primary key,
+       FirstName nvarchar(50) not null,
+       LastName nvarchar(50) not null 
+)  
+INSERT INTO Instructors (InstructorID, FirstName, LastName)
+VALUES (101, 'Ahmad', 'Ali')
+
+select *
+from Employees
+select *
+from Departments
+select *
+from TrainingCourses
+select *
+from Instructors
+select *
+from LeaveRequests
+
+
+DROP TABLE Employees
+DROP TABLE Departments
+DROP TABLE TrainingCourses
+DROP TABLE Instructors
+DROP TABLE LeaveRequests
+
+
+create table Instructors(
+       InstructorID int primary key,
+       FirstName nvarchar(50) not null,
+       LastName nvarchar(50) not null 
+) 
+--test [the code is working]
+insert into Instructors
+values(1,'mo','er')
+
+create table TrainingCourses(
+       CourseID int  Primary Key,
+       CourseName nvarchar(100) Not Null ,
+       StartDate date Not Null,
+       EndDate date Not Null,
+       InstructorID int Foreign Key references Instructors,
+) 
+--test [the code is not working]
+insert into Instructors
+values(404,'pro_course',2020-1-1,2020-3-1,1)
+
+create table Departments(
+       DepartmentID int  Primary Key,
+       DepartmentName nvarchar(50) Not Null Unique,
+     --ManagerID int  Foreign Key REFERENCES Employees,       
+)
+--test [the code is working]
+insert into Departments
+values(10,'IT')
+
+create table Employees(
+       EmployeeID int  Primary Key,
+       FirstName nvarchar(50) Not Null,
+       LastName  nvarchar(50) Not Null,
+       DepartmentID  int Foreign Key references Employees,
+       Salary decimal(10 ,2) not null Check (Salary >= 0)
+)
+insert into Employees
+values(1,'mohammed','namil',10,40000)
+
+
+INSERT INTO Departments (DepartmentID, DepartmentName)
+VALUES (20, 'IT')
+
+INSERT INTO Employees (EmployeeID, FirstName, LastName, DepartmentID, Salary)
+VALUES (1, 'mohammed', 'nabil', 20, 40000)
+
+
+create table Instructors(
+       InstructorID int primary key,
+       FirstName nvarchar(50) not null,
+       LastName nvarchar(50) not null 
+) 
+--test [the code is working]
+insert into Instructors
+values(1,'mo','er')
+
+create table TrainingCourses(
+       CourseID int  Primary Key,
+       CourseName nvarchar(100) Not Null ,
+       StartDate date Not Null,
+       EndDate date Not Null,
+       InstructorID int Foreign Key references Instructors,
+) 
+--test [the code is not working]
+insert into Instructors
+values(404,'pro_course',2020-1-1,2020-3-1,1)
+
+create table Departments(
+       DepartmentID int  Primary Key,
+       DepartmentName nvarchar(50) Not Null Unique,
+       ManagerID int  Foreign Key REFERENCES Employees,       
+)
+
+create table Employees(
+       EmployeeID int  Primary Key,
+       FirstName nvarchar(50) Not Null,
+       LastName  nvarchar(50) Not Null,
+       DepartmentID  int Foreign Key references Employees,
+       Salary decimal(10 ,2) not null Check (Salary >= 0)
+)
+
+USE Human_Resources_Department;
+GO
+
+-- 1️⃣ حذف الجداول القديمة بجميع أخطائها (بالترتيب الصحيح لفك الارتباطات)
+DROP TABLE IF EXISTS LeaveRequests;
+DROP TABLE IF EXISTS Employees;
+DROP TABLE IF EXISTS Departments;
+DROP TABLE IF EXISTS TrainingCourses;
+DROP TABLE IF EXISTS Instructors;
+GO
+
+-- 2️⃣ إنشاء جدول المدربين
+CREATE TABLE Instructors (
+    InstructorID INT PRIMARY KEY,
+    FirstName NVARCHAR(50) NOT NULL,
+    LastName NVARCHAR(50) NOT NULL
+);
+
+-- 3️⃣ إنشاء جدول الدورات التدريبية (مرتبط بالمدربين)
+CREATE TABLE TrainingCourses (
+    CourseID INT PRIMARY KEY,
+    CourseName NVARCHAR(100) NOT NULL,
+    StartDate DATE NOT NULL,
+    EndDate DATE NOT NULL,
+    InstructorID INT FOREIGN KEY REFERENCES Instructors(InstructorID)
+);
+
+-- 4️⃣ إنشاء جدول الأقسام
+CREATE TABLE Departments (
+    DepartmentID INT PRIMARY KEY,
+    DepartmentName NVARCHAR(50) NOT NULL UNIQUE
+);
+
+-- 5️⃣ إنشاء جدول الموظفين (مرتبط بالأقسام)
+CREATE TABLE Employees (
+    EmployeeID INT PRIMARY KEY,
+    FirstName NVARCHAR(50) NOT NULL,
+    LastName NVARCHAR(50) NOT NULL,
+    DepartmentID INT FOREIGN KEY REFERENCES Departments(DepartmentID),
+    Salary DECIMAL(10,2) NOT NULL CHECK (Salary >= 0)
+);
+
+-- 6️⃣ إنشاء جدول طلبات الإجازات (مرتبط بالموظفين)
+CREATE TABLE LeaveRequests (
+    LeaveID INT PRIMARY KEY,
+    EmployeeID INT FOREIGN KEY REFERENCES Employees(EmployeeID),
+    StartDate DATE NOT NULL,
+    EndDate DATE NOT NULL,
+    Reason NVARCHAR(100),
+    Status NVARCHAR(20) CHECK (Status IN ('Pending', 'Approved', 'Rejected'))
+);
+GO
+
+-- ====================================================
+-- 🧪 الآن تجربة إدخال البيانات بالترتيب الصحيح:
+-- ====================================================
+
+-- أ) إضافة قسم أولاً
+INSERT INTO Departments (DepartmentID, DepartmentName)
+VALUES (20, 'IT');
+
+-- ب) إضافة الموظف (الآن سينجح 100% لأن القسم 20 موجود)
+INSERT INTO Employees (EmployeeID, FirstName, LastName, DepartmentID, Salary)
+VALUES (1, 'mohammed', 'nabil', 20, 40000);
+
+-- ج) عرض النتيجة
+SELECT * FROM Employees;
+-----------------------------------------------------
+ 
+
+
+
+
+
+---------------------------------------------------
+--[1]
+create table Departments(
+       DepartmentID int  Primary Key,
+       DepartmentName nvarchar(50) Not Null Unique,
+       ManagerID int  Foreign Key REFERENCES Employees,       
+)
+--[2]
+create table Employees(
+       EmployeeID int  Primary Key,
+       FirstName nvarchar(50) Not Null,
+       LastName  nvarchar(50) Not Null,
+       DepartmentID  int Foreign Key references Employees,
+       Salary decimal(10 ,2) not null Check (Salary >= 0)
+)
+
+--[3]
+create table Instructors(
+       InstructorID int primary key,
+       FirstName nvarchar(50) not null,
+       LastName nvarchar(50) not null 
+)
+--[4]
+create table TrainingCourses(
+       CourseID int  Primary Key,
+       CourseName nvarchar(100) Not Null ,
+       StartDate date Not Null,
+       EndDate date Not Null,
+       InstructorID int Foreign Key references Instructors
+       )
+--[5]
+create table LeaveRequests(
+       LeaveID int  Primary Key,
+       EmployeeID int Foreign Key REFERENCES LeaveRequests,
+       StartDate date Not null,
+       EndDate   date Not Null,
+       Reason  nvarchar(100),
+       Status  nvarchar(20) Check (Status IN ('Pending' , 'Approved', 'Rejected'))
+)
+-------------------------------------------------------------------------------------
+
+
+
+
+
