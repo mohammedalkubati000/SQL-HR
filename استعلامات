@@ -1,0 +1,124 @@
+
+---------------------------------------------------------------------------------------
+select *
+from Departments
+order by DepartmentID asc
+
+select *
+from Employees
+
+select *
+from Instructors
+
+select *
+from TrainingCourses
+
+select *
+from LeaveRequests
+
+--[1]
+select   DepartmentID, count(EmployeeID) EmployeeID ,avg(Salary) avgSalary
+from Employees
+group by DepartmentID
+
+--[2]
+select FirstName +' '+ LastName as Instructor_Names,CourseName
+from Instructors i join TrainingCourses t
+on i.InstructorID = t.InstructorID
+--Q
+select FirstName +' '+ LastName as Instructor_Names,CourseName
+from Instructors i left join TrainingCourses t
+on i.InstructorID = t.InstructorID
+
+--[3]Q
+select   FirstName +' '+ LastName as Employee_Names,DepartmentID
+from Employees
+group by DepartmentID,FirstName,LastName
+-----------
+select   DepartmentID, count(EmployeeID) EmployeeID ,avg(Salary) avgSalary
+from Employees
+group by DepartmentID
+
+select   e.FirstName +' '+ e.LastName as Employee_Names,d.DepartmentName as DepartmentName
+from Employees e join Departments d
+on e.DepartmentID = d.DepartmentID
+
+
+select   FirstName +' '+ LastName as Employee_Names,d.DepartmentID, AVG(Salary) AS AvgSalary
+from Employees e join Departments d
+on e.DepartmentID = d.DepartmentID
+group by FirstName,LastName,d.DepartmentID
+
+
+
+
+
+select   FirstName +' '+ LastName as Employee_Names,d.DepartmentID
+from Employees e join Departments d
+on e.DepartmentID = d.DepartmentID
+
+
+
+select *
+from Employees
+select *
+from Departments
+
+
+select   DepartmentID, count(EmployeeID) EmployeeID ,avg(Salary) avgSalary
+from Employees
+group by DepartmentID
+
+----------------
+
+--[4]
+select *
+from Employees
+select *
+from LeaveRequests
+
+--[5]
+
+select DepartmentID,count(EmployeeID) as EmployeeCount
+from Employees
+group by DepartmentID
+
+--[6]
+
+select *
+from Instructors
+select *
+from TrainingCourses
+
+select FirstName+' '+ LastName as Instructor_Names,count(CourseName) as count_Course
+from Instructors i join TrainingCourses t
+on i.InstructorID = t.InstructorID
+group by FirstName,LastName
+-----------------------------
+select count(CourseName)
+from TrainingCourses
+
+--[7]
+
+select *
+from Employees
+select *
+from Departments
+order by DepartmentID asc
+
+select FirstName+' '+ LastName as EmployeeNames,DepartmentName
+from Employees e join Departments d
+on e.DepartmentID =d.DepartmentID
+
+
+--[8]
+select *
+from Employees
+select *
+from Departments
+select FirstName+' '+ LastName as EmployeeNames,count(DepartmentName) as countDepartment
+from Employees e join Departments d
+on e.DepartmentID =d.DepartmentID 
+group by FirstName,LastName
+
+
